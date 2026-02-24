@@ -89,27 +89,27 @@ describe("escrow", () => {
     const vaultBalance = (await provider.connection.getTokenAccountBalance(vault)).value.uiAmount;
     expect(vaultBalance).to.equal(depositAmount);
 
-  //   // Refund
-  //   await program.methods
-  //     .refund()
-  //     .accountsStrict({
-  //       maker: maker,
-  //       mintA: mintA,
-  //       makerAtaA: makerAtaA,
-  //       escrow: escrowPda,
-  //       vault: vault,
-  //       associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
-  //       tokenProgram: TOKEN_PROGRAM_ID,
-  //       systemProgram: anchor.web3.SystemProgram.programId,
-  //     })
-  //     .rpc();
+    // Refund
+    await program.methods
+      .refund()
+      .accountsStrict({
+        maker: maker,
+        mintA: mintA,
+        makerAtaA: makerAtaA,
+        escrow: escrowPda,
+        vault: vault,
+        associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
+        tokenProgram: TOKEN_PROGRAM_ID,
+        systemProgram: anchor.web3.SystemProgram.programId,
+      })
+      .rpc();
 
-  //   // Check closed
-  //   const escrowInfo = await provider.connection.getAccountInfo(escrowPda);
-  //   expect(escrowInfo).to.be.null;
+    // Check closed
+    const escrowInfo = await provider.connection.getAccountInfo(escrowPda);
+    expect(escrowInfo).to.be.null;
 
-  //   const vaultInfo = await provider.connection.getAccountInfo(vault);
-  //   expect(vaultInfo).to.be.null;
+    const vaultInfo = await provider.connection.getAccountInfo(vault);
+    expect(vaultInfo).to.be.null;
   });
 
   it("Makes and takes the escrow", async () => {
